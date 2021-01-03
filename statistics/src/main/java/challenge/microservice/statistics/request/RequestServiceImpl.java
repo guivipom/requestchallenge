@@ -15,9 +15,12 @@ public class RequestServiceImpl implements RequestService {
 
     private final HourlyRequestRepository requestRepository;
 
+    private final Long DAY_DURATION = 86399l;
+
     @Override
-    public List<HourlyRequest> getHourlyStatistics(Long customerId, Timestamp Day) {
-        return null;
+    public List<HourlyRequest> getHourlyStatistics(Long customerId, Long timeDay) {
+
+        return requestRepository.findByCustomerIdAndBetweenTime( customerId, timeDay, timeDay+DAY_DURATION);
     }
 
     @Override

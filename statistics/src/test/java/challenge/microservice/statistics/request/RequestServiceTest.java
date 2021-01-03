@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -19,6 +20,9 @@ import static org.mockito.Mockito.verify;
 class RequestServiceTest {
 
     private RequestService requestService;
+
+    private final Long DAY_DURATION = 86399l;
+
 
     @Mock
     private HourlyRequestRepository hourlyRequestRepository;
@@ -98,6 +102,28 @@ class RequestServiceTest {
 
         then(hourlyRequest.getRequestCount()).isEqualTo(2);
         then(hourlyRequest.getInvalidCount()).isEqualTo(2);
+    }
+
+    @Test
+    public void getListOfAllHourlyRequestWithinDayAndCustomerId(){
+
+        // given
+        HourlyRequest request1 = new HourlyRequest(1l,1l,1l,2l);
+        HourlyRequest request2 = new HourlyRequest(1l, 1l, 1l, 86000l);
+        HourlyRequest requestNotCostumer = new HourlyRequest(2l, 1l, 1l, 86000l);
+        HourlyRequest requestNotDay = new HourlyRequest(1l, 1l, 1l, 87000l);
+
+        List<HourlyRequest> expectedRequests = List.of(request1,request2);
+
+        given(hourlyRequestRepository.findByCustomerIdAndBetweenTime(1l,1l, 1l + DAY_DURATION))
+                                        .willReturn(expectedRequests);
+
+        // when
+        List<HourlyRequest> requests = requestService.getHourlyStatistics(1l,1l);
+
+        // then
+        then(requests).isEqualTo(expectedRequests);
+
     }
 
 

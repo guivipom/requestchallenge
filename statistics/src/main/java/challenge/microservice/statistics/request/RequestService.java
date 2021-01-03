@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RequestService {
-    List<HourlyRequest> getHourlyStatistics(Long customerId, Timestamp Day);
+    List<HourlyRequest> getHourlyStatistics(Long customerId, Long Day);
 
     HourlyRequest postValidRequest(Long customerId, Long time);
 

@@ -20,7 +20,7 @@ public class RequestController {
     private final RequestService requestService;
 
     @GetMapping("/HourlyRequest")
-    ResponseEntity<List<HourlyRequest>> getHourlyStatistics(Long customerId, Timestamp day){
+    ResponseEntity<List<HourlyRequest>> getHourlyStatistics(Long customerId, Long day){
         return ResponseEntity.ok(requestService.getHourlyStatistics(customerId, day));
 
     }

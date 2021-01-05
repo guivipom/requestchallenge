@@ -10,5 +10,5 @@ public interface HourlyRequestRepository extends CrudRepository<HourlyRequest,Lo
 
     Optional<HourlyRequest> findByCustomerIdAndTime(final Long customerId, final Long time);
 
-    List<HourlyRequest> findByCustomerIdAndBetweenTime(final Long customerId, final Long startPeriod, final Long endPeriod);
+    List<HourlyRequest> findAllByCustomerIdAndTimeBetween(final Long customerId, final Long startPeriod, final Long endPeriod);
 }

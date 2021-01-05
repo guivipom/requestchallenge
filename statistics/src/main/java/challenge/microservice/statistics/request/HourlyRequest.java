@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 
 @Entity
@@ -25,8 +29,10 @@ public class HourlyRequest {
     private Long invalidCount;
     @Column(name="TIME")
     private Long time;
+    private LocalDateTime date;
 
     public HourlyRequest(final Long customerId, final Long requestCount, final Long invalidCount, final Long time){
-        this(null, customerId,requestCount,invalidCount,time);
+        this(null, customerId,requestCount,invalidCount,time,
+                            LocalDateTime.ofInstant(Instant.ofEpochSecond(time), ZoneId.systemDefault()));
     }
 }

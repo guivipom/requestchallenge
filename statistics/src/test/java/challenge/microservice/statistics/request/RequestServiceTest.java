@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,7 +54,7 @@ class RequestServiceTest {
         given(hourlyRequestRepository.save(any())).will(returnsFirstArg());
 
         Long customerId= 1L;
-        Long time= 1L;
+        Long time= 0L;
 
         HourlyRequest existingRow = new HourlyRequest(1L,1L,1L,1L);
 
@@ -74,7 +75,7 @@ class RequestServiceTest {
         given(hourlyRequestRepository.save(any())).will(returnsFirstArg());
 
         Long customerId= 1L;
-        Long time= 1L;
+        Long time= 0L;
 
         // given
         HourlyRequest hourlyRequest = requestService.postInvalidRequest(customerId, time);
@@ -89,7 +90,7 @@ class RequestServiceTest {
         given(hourlyRequestRepository.save(any())).will(returnsFirstArg());
 
         Long customerId= 1L;
-        Long time= 1L;
+        Long time= 0L;
 
         HourlyRequest existingRow = new HourlyRequest(1L,1L,1L,1L);
 
@@ -115,7 +116,7 @@ class RequestServiceTest {
 
         List<HourlyRequest> expectedRequests = List.of(request1,request2);
 
-        given(hourlyRequestRepository.findByCustomerIdAndBetweenTime(1l,1l, 1l + DAY_DURATION))
+        given(hourlyRequestRepository.findAllByCustomerIdAndTimeBetween(1l,0l,  DAY_DURATION))
                                         .willReturn(expectedRequests);
 
         // when
@@ -128,23 +129,3 @@ class RequestServiceTest {
 
 
 }
-
-
-//    @Test
-//    public void checkCorrectAttemptTest(){
-//
-//        given(attemptRepository.save(any()))
-//                .will(returnsFirstArg());
-//        //given
-//        ChallengeAttemptDTO attemptDTO = new ChallengeAttemptDTO(50,60, "Guillermo", 3000);
-//
-//        //when
-//        ChallengeAttempt resultAttempt = challengeService.verifyAttempt(attemptDTO);
-//
-//        //then
-//        then(resultAttempt.isCorrect()).isTrue();
-//
-//        verify(userRepository).save(new User("Guillermo"));
-//        verify(attemptRepository).save(resultAttempt);
-//        verify(gameClient).sendAttempt(resultAttempt);
-//    }

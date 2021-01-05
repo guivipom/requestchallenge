@@ -45,7 +45,7 @@ class UserControllerTest {
 
         // given
         UserDTO userDTO = new UserDTO("aaaaaaaa-bbbb-cccc-1111-222222222222", 1L,2L, "123.234.56.78"  );
-        Optional<User> expectedResponse = Optional.of(new User("aaaaaaaa-bbbb-cccc-1111-222222222222", 1L, 2L, "123.234.56.78"));
+        User expectedResponse = new User("aaaaaaaa-bbbb-cccc-1111-222222222222", 1L, 2L, "123.234.56.78");
         given(userService.userRequest(eq(userDTO))).willReturn(expectedResponse);
 
         // when
@@ -56,7 +56,7 @@ class UserControllerTest {
         then(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         then(response.getContentAsString()).isEqualTo(
                 jsonResultAttempt.write(
-                        expectedResponse.get()
+                        expectedResponse
                 ).getJson());
     }
 

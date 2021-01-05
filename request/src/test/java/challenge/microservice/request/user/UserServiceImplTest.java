@@ -1,6 +1,7 @@
 package challenge.microservice.request.user;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,9 +18,11 @@ class UserServiceImplTest {
     private UserService userService;
 
 
+
+
     @BeforeEach
     void setUp() {
-        userService = new UserServiceImpl();
+        userService = new UserServiceImpl(null);
     }
 
     void correctRequestIsprocessed(){
@@ -27,33 +30,35 @@ class UserServiceImplTest {
         UserDTO userDTO = new UserDTO("aaaaaaaa-bbbb-cccc-1111-222222222222", 1L,2L, "123.234.56.78"  );
 
         //when
-        Optional<User> userProcessed = userService.userRequest(userDTO);
+        User userProcessed = userService.userRequest(userDTO);
 
         //then
-        then(userProcessed.get()).isEqualTo(userDTO);
+        then(userProcessed).isEqualTo(userDTO);
     }
 
+    @Test
     void blacklistedUserIsNotProcessed(){
 
         //given
         UserDTO userDTO = new UserDTO("aaaaaaaa-bbbb-cccc-1111-222222222222", 1L,2L, "555.555.555.555"  );
 
         //when
-        Optional<User> userProcessed = userService.userRequest(userDTO);
+        User userProcessed = userService.userRequest(userDTO);
 
         // then
-        then(userProcessed.isEmpty()).isTrue();
+        then(userProcessed).isNull();
     }
 
+    @Test
     void disabledCustomerIsNotProcessed(){
 
         //given
         UserDTO userDTO = new UserDTO("aaaaaaaa-bbbb-cccc-1111-222222222222", 42L,2L, "123.234.56.78"  );
 
         //when
-        Optional<User> userProcessed = userService.userRequest(userDTO);
+        User userProcessed = userService.userRequest(userDTO);
 
         // then
-        then(userProcessed.isEmpty()).isTrue();
+        then(userProcessed).isNull();
     }
 }

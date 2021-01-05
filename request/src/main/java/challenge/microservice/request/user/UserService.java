@@ -4,9 +4,9 @@ import java.util.Optional;
 
 public interface UserService {
 
-    Optional<User> userRequest(UserDTO userDTO);
+    User userRequest(UserDTO userDTO);
 
-    boolean isBlacklisted();
+    boolean isBlacklisted(String ip);
 
-    boolean isCustomerAllowed();
+    boolean isCustomerBanned(long customerId);
 }

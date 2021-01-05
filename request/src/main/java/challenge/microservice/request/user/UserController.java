@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -22,12 +23,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create")
-    ResponseEntity<User> postResult(@RequestBody @Valid UserDTO userDTO){
-        Optional<User> userProcessed = userService.userRequest(userDTO);
+    ResponseEntity<String> postResult(@RequestBody @Valid UserDTO userDTO){
+        User userProcessed = userService.userRequest(userDTO);
 
 
-        return userProcessed.isPresent() ? ResponseEntity.ok(userProcessed.get()) :
-                (ResponseEntity<User>) ResponseEntity.badRequest();
+        return Objects.nonNull(userProcessed) ? ResponseEntity.ok(userProcessed.toString()) :
+                ResponseEntity.badRequest().body("Your request is invalid");
     }
 
 

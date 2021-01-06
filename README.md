@@ -38,18 +38,20 @@ or not valid the request won't be processed, the request will be checked for cus
 request is valid or invalid, the data will be sent to the statistics microservice to store the request attempt.
 The application is running on localhost:8080, so you will need to append your request to this path. 
 
-## Post user
-#Request
+### Post user
+
+##Request
+
 `POST /user/create`
 
-# Blaclisted IP's
+## Blaclisted IP's
 The request will count as invalid request if contains any of these IP's: "111.111.111.111", "555.555.555"
 
 
-# Banned customers
+## Banned customers
 The request will count as invalid request if the customer if if any of these: 42, 288, 13
 
-# Valid sample request
+## Valid sample request
 ```bash
 curl --location --request POST 'localhost:8080/user/create' \
 --header 'Content-Type: application/json' \
@@ -60,7 +62,7 @@ curl --location --request POST 'localhost:8080/user/create' \
     "remoteIP": "132.456.732.2"
 }'
 ```
-# Invalid sample request
+## Invalid sample request
 ```bash
 curl --location --request POST 'localhost:8080/user/create' \
 --header 'Content-Type: application/json' \

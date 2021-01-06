@@ -1,4 +1,4 @@
-# requestchallenge
+# Request Challenge
 
 On this repository I created 2 microservices using JAVA and SPRING.One microservices will take care of the customer
 request and the other will gather statistics about the valid and invalid request that arrive to the first one.
@@ -30,7 +30,46 @@ and run the same command:
 mvnw spring-boot:run
 ```
 
-That wil start the statistics microservice on port 8081.
+That will start the statistics microservice on port 8081.
 
-## Local Usage
+## Local Usage of Request Microservice
+The request microservice will accept post request with complete and valid data for the creation of a user . If a field is missing
+or not valid the request won't be processed, the request will be checked for customer not allowed or blacklisted IPs. Wether the
+request is valid or invalid, the data will be sent to the statistics microservice to store the request attempt.
 The application is running on localhost:8080, so you will need to append your request to this path. 
+
+## Post user
+#Request
+`POST /user/create`
+
+# Blaclisted IP's
+The request will count as invalid request if contains any of these IP's: "111.111.111.111", "555.555.555"
+
+
+# Banned customers
+The request will count as invalid request if the customer if if any of these: 42, 288, 13
+
+# Valid sample request
+```bash
+curl --location --request POST 'localhost:8080/user/create' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userId":"aaaaaaaa-bbbb-cccc-1111-222222222222",
+    "customerId":11,
+    "tagId":2,
+    "remoteIP": "132.456.732.2"
+}'
+```
+# Invalid sample request
+```bash
+curl --location --request POST 'localhost:8080/user/create' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userId":"aaaaaaaa-bbbb-cccc-1111-222222222222",
+    "customerId":42,
+    "tagId":2,
+    "remoteIP": "132.456.732.2"
+}'
+```
+
+

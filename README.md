@@ -3,21 +3,7 @@
 On this repository I created 2 microservices using JAVA and SPRING. One microservice will take care customer's
 request and the other will gather statistics about the valid and invalid request that arrive to the first one.
 The communication is done through API calls, the request microservice will send a request to the statistics 
-microservice, without caring if the request was succesful or not. Some of the choices I made during the process:
-
- * Created two microservices as the statistics functionality seemed less critical, as opposed that having a service
- that handles both functionality.
- * Handling the dates in epoch seconds, as I feel it is easier to use ( as a programmer ) and avoids dealing
- with different date formats. On addition the statistics API will be mainly used by another service, so we can avoid 
- human formatting. However some support to handle human dates could be further added, as I did with the get statistics
- end point that supports both epoch seconds and "d/MM/yyyy" date format.
- * I decided that the validation of the request fields, could be handled using the JPA validation. So it would be first
- validated when the request arrives to the controller. The idea was to extend the validation functionality so it can use
- the statistics client when a field validation fails but finally I couldn't make it work. I still think that the solution
- would be cleaner that way, instead of going directly to each field and checking its validity so I leave it as pending
- work
- * ...
-
+microservice, without caring if the request was succesful or not. 
 
 ## Local Usage
 
@@ -130,3 +116,19 @@ curl --location --request GET 'localhost:8081/statistics/HourlyRequest' \
     "customerId":2,
     "time":"1609945121"
 }'
+```
+
+# Developer notes:
+
+ * Created two microservices as the statistics functionality seemed less critical, as opposed that having a service
+ that handles both functionality.
+ * Handling the dates in epoch seconds, as I feel it is easier to use ( as a programmer ) and avoids dealing
+ with different date formats. On addition the statistics API will be mainly used by another service, so we can avoid 
+ human formatting. However some support to handle human dates could be further added, as I did with the get statistics
+ end point that supports both epoch seconds and "d/MM/yyyy" date format.
+ * I decided that the validation of the request fields, could be handled using the JPA validation. So it would be first
+ validated when the request arrives to the controller. The idea was to extend the validation functionality so it can use
+ the statistics client when a field validation fails but finally I couldn't make it work. I still think that the solution
+ would be cleaner that way, instead of going directly to each field and checking its validity so I leave it as pending
+ work
+ * ...

@@ -129,4 +129,6 @@ curl --location --request GET 'localhost:8081/statistics/HourlyRequest' \
  the statistics client when a field validation fails but finally I couldn't make it work. I still think that the solution
  would be cleaner that way, instead of going directly to each field and checking its validity so I leave it as pending
  work
- * ...
+ * I mocked most of the functionality regarding the creation of the user, like creating a list of blacklisted IPs and 
+ banned customers, instead of creating a proper repository and classes for it. I felt that most of the challenge was focused
+ more into how do validate the request and store the request attempts to get hourly statistics.

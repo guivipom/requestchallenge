@@ -30,8 +30,6 @@ The application is running on localhost:8080, so you will need to append your re
 
 ### Post user
 
-##Request
-
 `POST /user/create`
 
 ### Blacklisted IP's

@@ -74,4 +74,55 @@ curl --location --request POST 'localhost:8080/user/create' \
 }'
 ```
 
+## Local Usage of Statistics Microservice
 
+The statistics microservice will receive request with a customer id and a time, to keep track of valid
+and invalid request per costumer and hour. The microservice also provides an endpoint to get a list of
+statistics per hour and costumer too. You can use this website if you want to convert from epoch to human
+date https://www.epochconverter.com/ and input some request directly.
+
+### Post Valid request
+`POST /statistics/valid`
+
+### Post Invalid request
+`POST /statistics/valid`
+
+## Sample request
+For both endpoints we will provide a customer Id and time on epoch seconds:
+
+```bash
+curl --location --request POST 'localhost:8081/statistics/valid' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "customerId":2,
+    "time":1609771448
+}'
+```
+
+
+### Get Hourly statistics request
+`Get /statistics/HourlyRequest`
+
+The hourly request will show a list of the request for a day  and costumer, showing data per hour. The request
+accepts time on human format and also epoch seconds.
+
+## Sample request 
+
+
+```bash
+curl --location --request GET 'localhost:8081/statistics/HourlyRequest' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "customerId":2,
+    "date":"4/01/2021"
+}'
+```
+
+
+```bash
+curl --location --request GET 'localhost:8081/statistics/HourlyRequest' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "customerId":2,
+    "time":"1609945121"
+}'
